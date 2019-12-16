@@ -1,0 +1,17 @@
+version: '3'
+services:
+ postgres-server:
+  image: postgres:latest
+  container_name: 'my_postgres'
+  environment:
+       - POSTGRES_DB=visitDB
+       - POSTGRES_USER=ryhor
+       - POSTGRES_PASSWORD=fmIZ3REf
+  ports:
+   - "5432:5432"
+ test-app:   
+  build: .
+  ports:
+   - "8090:8080"
+  depends_on:
+   - postgres-server
