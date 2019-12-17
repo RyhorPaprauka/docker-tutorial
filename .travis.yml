@@ -11,4 +11,25 @@ before_install:
 
 script:
   - mvn test
-  - mvn clean package 
+  - mvn clean package
+
+after_success:
+  - export TAG=latest
+  - export IMAGE_NAME=dockerTest
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker-compose build
+  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:$TAG
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-springboot-travis"
+  env: "DockerSpringbootTravis-env"
+  bucket_name: "elasticbeanstalk-us-east-2-639392862171"
+  bucket_path: "docker-springboot-travis"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
