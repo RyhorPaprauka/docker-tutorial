@@ -12,6 +12,6 @@ services:
  test-app:   
   build: .
   ports:
-   - "8090:8080"
+   - "8080:8080"
   depends_on:
    - postgres-server
