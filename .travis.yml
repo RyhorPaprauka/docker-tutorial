@@ -14,8 +14,8 @@ script:
   - mvn clean package
 
 after_success:
-  - export TAG=latest
-  - export IMAGE_NAME=dockerTest
+  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
+  - export IMAGE_NAME=grinman/docker-test
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - docker-compose build
   - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
