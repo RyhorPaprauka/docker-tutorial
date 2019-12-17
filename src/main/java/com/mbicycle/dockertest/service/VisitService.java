@@ -12,7 +12,7 @@ import java.util.Objects;
 @Transactional
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class TestService {
+public class VisitService {
 
     private final VisitRepository visitRepository;
 

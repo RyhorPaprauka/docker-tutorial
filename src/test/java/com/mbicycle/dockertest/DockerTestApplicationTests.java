@@ -9,5 +9,4 @@ class DockerTestApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
