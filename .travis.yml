@@ -14,12 +14,9 @@ script:
   - mvn clean install
 
 after_success:
-  - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG"; else echo "$TRAVIS_BRANCH--$COMMIT"; fi`
-  - export IMAGE_NAME=grinman/docker-test
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - docker-compose build
-  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
-  - docker push $IMAGE_NAME:$TAG
+  - docker push grinman/docker-test:latest
 
 deploy:
   provider: elasticbeanstalk
