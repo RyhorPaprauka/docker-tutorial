@@ -16,7 +16,7 @@ script:
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - docker-compose build
-  - docker tag docker-test_docker-test:latest grinman/docker-test:latest
+  - docker tag docker-tutorial_docker-test:latest grinman/docker-test:latest
   - docker push grinman/docker-test:latest
 
 deploy:
