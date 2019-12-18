@@ -1,6 +1,6 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jre-alpine
 ENV APP_ROOT /app
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 COPY target/*.jar ${APP_ROOT}/run.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=prod", "-jar", "run.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=prod", "-jar", "run.jar"]

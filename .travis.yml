@@ -1,4 +1,3 @@
-sudo: required
 language: java
 jdk:
   - openjdk8
@@ -18,9 +17,6 @@ after_success:
   - docker-compose build
   - docker tag docker-tutorial_docker-test:latest grinman/docker-test:latest
   - docker push grinman/docker-test:latest
-
-before_deploy:
-  - mvn clean package
 
 deploy:
   provider: elasticbeanstalk
