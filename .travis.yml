@@ -13,14 +13,15 @@ script:
   - mvn test
   - mvn clean package
 
-after_success:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-  - docker-compose build
-  - docker tag docker-tutorial_docker-test:latest grinman/docker-test:latest
-  - docker push grinman/docker-test:latest
+#after_success:
+#  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+#  - docker-compose build
+#  - docker tag docker-tutorial_docker-test:latest grinman/docker-test:latest
+#  - docker push grinman/docker-test:latest
 
 deploy:
   skip_cleanup: true
+  file: target/docker-test-0.0.1-SNAPSHOT.jar
   provider: elasticbeanstalk
   region: "us-east-2"
   app: "docker-springboot-travis"
