@@ -1,13 +1,25 @@
 {
-  "AWSEBDockerrunVersion": "1",
-  "Logging": "/tmp/sample-app",
-  "Image": {
-    "Name": "ryhor/docker-test"
-  },
-  "Ports": [
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
     {
-      "ContainerPort": 8080,
-      "HostPort": 80
+      "name": "visit",
+      "image": "grinman/multi-visit",
+      "hostname": "visit",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "nginx",
+      "image": "grinman/multi-nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["visit"],
+      "memory": 128
     }
   ]
 }

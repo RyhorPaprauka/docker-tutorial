@@ -13,16 +13,19 @@ script:
   - mvn clean package
 
 after_success:
-  - docker build -t ryhor/docker-test .
+  - docker build -t ryhor/multi-visit .
+  - docker build -t ryhor/multi-nginx ./nginx
+  - echo  "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+  - docker push grinman/multi-visit
+  - docker push grinman/multi-nginx
 
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
-  app: "docker-springboot-travis"
-  env: "DockerSpringbootTravis-env"
+  app: "multi-visit"
+  env: "MultiVisit-env"
   bucket_name: "elasticbeanstalk-us-east-2-639392862171"
-  bucket_path: "docker-springboot-travis"
-  skip_cleanup: true
+  bucket_path: "multi-visit"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
