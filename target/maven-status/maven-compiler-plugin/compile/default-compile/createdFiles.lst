@@ -1,6 +1,0 @@
-com\mbicycle\dockertest\model\Visit.class
-com\mbicycle\dockertest\controller\VisitController.class
-com\mbicycle\dockertest\model\Visit$VisitBuilder.class
-com\mbicycle\dockertest\repository\VisitRepository.class
-com\mbicycle\dockertest\service\VisitService.class
-com\mbicycle\dockertest\DockerTestApplication.class
