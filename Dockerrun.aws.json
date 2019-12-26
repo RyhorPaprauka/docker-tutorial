@@ -1,0 +1,25 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "visit",
+      "image": "grinman/multi-visit",
+      "hostname": "visit",
+      "essential": false,
+      "memory": 256
+    },
+    {
+      "name": "nginx",
+      "image": "grinman/multi-nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["visit"],
+      "memory": 128
+    }
+  ]
+}

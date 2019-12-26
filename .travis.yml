@@ -1,4 +1,3 @@
-sudo: required
 language: java
 jdk:
   - openjdk8
@@ -11,20 +10,22 @@ before_install:
 
 script:
   - mvn test
-  - mvn clean install
+  - mvn clean package
 
 after_success:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-  - docker-compose build
-  - docker push grinman/docker-test:latest
+  - docker build -t grinman/multi-visit .
+  - docker build -t grinman/multi-nginx ./nginx
+  - echo  "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+  - docker push grinman/multi-visit
+  - docker push grinman/multi-nginx
 
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
-  app: "docker-springboot-travis"
-  env: "DockerSpringbootTravis-env"
+  app: "multi-visit"
+  env: "MultiVisit-env"
   bucket_name: "elasticbeanstalk-us-east-2-639392862171"
-  bucket_path: "docker-springboot-travis"
+  bucket_path: "multi-visit"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY

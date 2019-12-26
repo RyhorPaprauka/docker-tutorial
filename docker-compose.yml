@@ -1,17 +1,23 @@
 version: '3'
 services:
- postgres-server:
-  image: postgres:latest
-  container_name: 'my_postgres'
-  environment:
-       - POSTGRES_DB=visitDB
-       - POSTGRES_USER=ryhor
-       - POSTGRES_PASSWORD=fmIZ3REf
-  ports:
-   - "5432:5432"
- test-app:   
-  build: .
-  ports:
-   - "8080:8080"
-  depends_on:
-   - postgres-server
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=visitDB
+      - POSTGRES_USER=ryhor
+      - POSTGRES_PASSWORD=fmIZ3REf
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '3050:80'
+  visit:
+    environment:
+      - PGURL=jdbc:postgresql://postgres/visitDB
+      - PGUSER=ryhor
+      - PGPASSWORD=fmIZ3REf
+    build: .
+    depends_on:
+      - postgres
